@@ -1,22 +1,31 @@
 import ui
+import console
 
 class LoginView(ui.View):
 	def __init__(self):
 		self.background_color = '#ffffff'
 		self.name = 'Accesso Registro'
-		self.label = ui.Label(frame=(0, 100, 400, 40))
-		self.label.text = "Inserire PIN Studente"
-		self.label.alignment = ui.ALIGN_CENTER
-		self.add_subview(self.label)
+		
+		# Testo centrale
+		label = ui.Label(frame=(0, 100, 400, 40))
+		label.text = "Inserire PIN Studente"
+		label.alignment = ui.ALIGN_CENTER
+		self.add_subview(label)
+		
+		# Casella PIN
 		self.entry = ui.TextField(frame=(100, 150, 200, 32))
 		self.entry.placeholder = "PIN"
 		self.add_subview(self.entry)
-		self.btn = ui.Button(title="Verifica")
-		self.btn.frame = (150, 200, 100, 40)
-		self.btn.action = self.check
-		self.add_subview(self.btn)
+		
+		# Bottone Verifica
+		btn = ui.Button(title="Verifica")
+		btn.frame = (150, 200, 100, 40)
+		btn.action = self.check
+		self.add_subview(btn)
+		
 	def check(self, sender):
+		# Qui c'era l'errore, ora è corretto!
 		if self.entry.text == "1234":
-			ui.alert("PIN Corretto")
+			console.alert("Successo", "PIN Corretto! Benvenuto.", "OK", hide_cancel_button=True)
 		else:
-			ui.alert("PIN Errato")
+			console.alert("Errore", "PIN Sbagliato, riprova.", "OK", hide_cancel_button=True)
