@@ -3,28 +3,50 @@ import console
 
 class LoginView(ui.View):
 	def __init__(self):
-		self.background_color = '#ffffff'
-		self.name = 'Accesso Registro'
+		# Sfondo scuro per stile Onion
+		self.background_color = '#1a1a1a' 
+		self.name = 'Onion System Login'
 		
-		label = ui.Label(frame=(0, 100, 400, 40))
-		label.text = "Inserire PIN Studente"
-		label.alignment = ui.ALIGN_CENTER
-		self.add_subview(label)
+		# Calcoliamo il centro dello schermo
+		w, h = ui.get_screen_size()
 		
-		self.entry = ui.TextField(frame=(100, 150, 200, 32))
+		# Etichetta centrata
+		self.label = ui.Label()
+		self.label.frame = (0, h/2 - 100, w, 40)
+		self.label.text = "SISTEMA CRIPTATO - INSERIRE PIN"
+		self.label.text_color = '#00ff00'
+		self.label.alignment = ui.ALIGN_CENTER
+		self.label.font = ('<system-bold>', 18)
+		self.add_subview(self.label)
+		
+		# Campo PIN centrato con gli asterischi *
+		self.entry = ui.TextField()
+		self.entry.frame = (w/2 - 100, h/2 - 40, 200, 40)
 		self.entry.placeholder = "PIN"
-		# Nascondiamo i numeri mentre scrivi per sicurezza
+		self.entry.background_color = '#ffffff'
+		self.entry.alignment = ui.ALIGN_CENTER
+		self.entry.keyboard_type = ui.KEYBOARD_NUMBER_PAD
+		# Questa riga mette gli asterischi * mentre scrivi
 		self.entry.secure_text_entry = True 
 		self.add_subview(self.entry)
 		
-		btn = ui.Button(title="Verifica")
-		btn.frame = (150, 200, 100, 40)
-		btn.action = self.check
-		self.add_subview(btn)
+		# Bottone centrato
+		self.btn = ui.Button(title="ACCEDI")
+		self.btn.frame = (w/2 - 50, h/2 + 30, 100, 45)
+		self.btn.background_color = '#00ff00'
+		self.btn.tint_color = '#1a1a1a'
+		self.btn.corner_radius = 10
+		self.btn.action = self.check
+		self.add_subview(self.btn)
 		
 	def check(self, sender):
-		# Nuovo PIN impostato su 5381
+		# Usiamo il tuo PIN salvato 5381
 		if self.entry.text == "5381":
-			console.alert("Successo", "PIN Corretto! Accesso eseguito.", "OK", hide_cancel_button=True)
+			self.close() 
+			console.hud_alert("Accesso Onion VPN...", "success")
 		else:
-			console.alert("Errore", "PIN Sbagliato!", "Riprova", hide_cancel_button=True)
+			console.alert("ACCESSO NEGATO", "PIN non autorizzato.", "Riprova", hide_cancel_button=True)
+
+# Avvio
+v = LoginView()
+v.present('fullscreen', hide_title_bar=True)
